@@ -15,7 +15,8 @@ body {
 }
 
 .cell {
-  display: inline-block;
+  display: inline;
+  float: left;
   color: black;
   width: 100px;
   height: 100px;
