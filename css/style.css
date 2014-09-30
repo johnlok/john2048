@@ -1,5 +1,11 @@
-body {
+@font-face {
+  font-family: "Aileron";
+  src: url("/fonts/Aileron-Light.otf");
+}
 
+body {
+  background: white;
+  font-family: "Aileron";
 }
 
 .special {
