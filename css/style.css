@@ -35,14 +35,14 @@ body {
   border-radius: 3px;
   display: inline-block;
   color: black;
-  width: 90px;
-  height: 90px;
+  width: 92px;
+  height: 92px;
   background: rgba(255,255,255,0.9);
   text-align: center;
-  margin-top: 7px;
-  margin-bottom: 7px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-left: 4px;
+  margin-right: 4px;
   font-size: 4em;
 }
 
