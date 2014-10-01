@@ -3,9 +3,17 @@
   src: url("/fonts/Aileron-Light.otf");
 }
 
+html {
+}
+
 body {
-  background: white;
   font-family: "Aileron";
+  background: url("../img/background.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: white;
 }
 
 .special {
@@ -13,27 +21,31 @@ body {
 }
 
 .board {
-  background: black;
+  background: rgba(0,0,0,0.4);
+  border-radius: 3px;
   text-align: center;
   padding: 20px;
   width: 456px;
   height: 456px;
   margin:0 auto;
+  margin-top: 40px;
 }
 
 .cell {
   border-radius: 3px;
   display: inline-block;
   color: black;
-  width: 100px;
-  height: 100px;
-  background: white;
+  width: 90px;
+  height: 90px;
+  background: rgba(255,255,255,0.9);
   text-align: center;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  margin-left: 5px;
+  margin-right: 5px;
   font-size: 4em;
 }
 
 .cell div {
-  margin-top: 9px;
+  margin-top: 7px;
 }
