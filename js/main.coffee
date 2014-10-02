@@ -29,6 +29,38 @@ generateTile = (board) ->
     generateTile(board)
   console.log "generated tile with a value of #{value}"
 
+move = (board, direction) ->
+  for i in [0..3]
+    if direction is 'right'
+      row = getRow(i, board)
+      mergeCells(row, direction)
+      collapseCells()
+
+getRow = (r, board) ->
+  [board[r][0], board[r][1], board[r][2], board[r][3]]
+  #console.log 'get row'
+
+mergeCells = (row, direction) ->
+  #console.log 'merge cells'
+  if direction is 'right'
+    for a in [3...0]
+      for b in [a-1..0]
+        if row[a] is 0
+          break
+        else if row[a] is row[b]
+          row[a] *= 2
+          row[b] = 0
+        else if row[a] isnt 0
+          break
+  row
+
+console.log mergeCells([4,4,2,0],'right')
+console.log mergeCells([4,0,0,4],'right')
+console.log mergeCells([4,4,2,0],'right')
+
+collapseCells = ->
+  console.log 'collapse cells'
+
 printArray = (array) ->
   console.log "--start--"
   for row in array
@@ -37,16 +69,37 @@ printArray = (array) ->
 
 showValue = (value) ->
   if value == 0 then "" else value
+  #this function changes all values from 0 to ""
 
 showBoard = (board) ->
   for row in [0..3]
     for col in [0..3]
       $(".r#{row}.c#{col} > div").html(showValue(board[row][col]))
+  #this part of the code assigns the value of the board array into divs using jquery
 
 
 $ ->
-  newBoard = buildBoard()
-  generateTile(newBoard)
-  generateTile(newBoard)
-  printArray(newBoard)
-  showBoard(newBoard)
+  @board = buildBoard()
+  generateTile(@board)
+  generateTile(@board)
+  showBoard(@board)
+
+  $('body').keydown (e) => #where keydown is the event and everything after (e) is the event handler
+    #e.preventDefault() #if here, would stop all keydown events on the page from working
+    key = e.which #event.which is a function in jquery which returns which key you pressed
+    keys = [37..40]
+    if key in keys
+      #e.preventDefault()
+      direction = switch key #the switch function switches the value based upon conditions
+        when 37 then 'left'
+        when 38 then 'up'
+        when 39 then 'right'
+        when 40 then 'down'
+        #continue the game
+      console.log "The direction is " + direction
+
+      #try moving
+      move(@board, direction)
+      #check move validity
+    else
+
