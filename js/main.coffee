@@ -34,14 +34,15 @@ move = (board, direction) ->
     if direction is 'right'
       row = getRow(i, board)
       mergeCells(row, direction)
-      collapseCells()
+      collapseCells(row, direction)
+
 
 getRow = (r, board) ->
   [board[r][0], board[r][1], board[r][2], board[r][3]]
-  #console.log 'get row'
 
 mergeCells = (row, direction) ->
-  #console.log 'merge cells'
+  #to merge the cells we need to know the rows and the direction
+  #this is a double for loop which iterates over all the possible comparisons within the array
   if direction is 'right'
     for a in [3...0]
       for b in [a-1..0]
@@ -50,16 +51,27 @@ mergeCells = (row, direction) ->
         else if row[a] is row[b]
           row[a] *= 2
           row[b] = 0
-        else if row[a] isnt 0
+        else if row[b] isnt 0
           break
   row
 
-console.log mergeCells([4,4,2,0],'right')
-console.log mergeCells([4,0,0,4],'right')
-console.log mergeCells([4,4,2,0],'right')
+collapseCells = (row, direction) ->
+  row = row.filter (x) -> x isnt 0
+  zeroesToAdd = 4 - row.length
+  for i in [0...zeroesToAdd]
+    switch direction
+      when 'right','down' then row.unshift 0
+      when 'left','up' then row.push 0
+  console.log row
+  row
 
-collapseCells = ->
-  console.log 'collapse cells'
+  # if direction is 'right'
+  #   while row.length < 4
+  #     row.unshift 0
+  # console.log row
+  # row
+
+
 
 printArray = (array) ->
   console.log "--start--"
@@ -82,6 +94,7 @@ $ ->
   @board = buildBoard()
   generateTile(@board)
   generateTile(@board)
+  printArray(@board)
   showBoard(@board)
 
   $('body').keydown (e) => #where keydown is the event and everything after (e) is the event handler
@@ -89,7 +102,7 @@ $ ->
     key = e.which #event.which is a function in jquery which returns which key you pressed
     keys = [37..40]
     if key in keys
-      #e.preventDefault()
+      e.preventDefault()
       direction = switch key #the switch function switches the value based upon conditions
         when 37 then 'left'
         when 38 then 'up'
