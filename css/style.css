@@ -6,6 +6,13 @@
 html {
 }
 
+canvas {
+  position: absolute;
+  margin-left: -480px;
+  z-index: -1;
+  margin-top: -100px;
+}
+
 body {
   font-family: "Aileron";
   background: url("../img/background.png") no-repeat center center fixed;
@@ -28,7 +35,7 @@ body {
   width: 420px;
   height: 420px;
   margin:0 auto;
-  margin-top: 40px;
+  margin-top: 100px;
 }
 
 .cell {
@@ -45,4 +52,8 @@ body {
 
 .cell div {
   margin-top: 13px;
+}
+
+h1 {
+  color: #cac8d3;
 }

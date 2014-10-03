@@ -4,6 +4,8 @@ randomInt = (x) ->
 randomCellIndices = ->
   [randomInt(4),randomInt(4)]
 
+
+
 buildBoard = ->
   # board = []
   # for row in [0..3]
@@ -30,15 +32,23 @@ generateTile = (board) ->
   console.log "generated tile with a value of #{value}"
 
 move = (board, direction) ->
+  newBoard = buildBoard()
+
   for i in [0..3]
     if direction is 'right'
       row = getRow(i, board)
-      mergeCells(row, direction)
-      collapseCells(row, direction)
+      row = mergeCells(row, direction)
+      row = collapseCells(row, direction)
+      setRow(row, i, newBoard)
+
+  newBoard
 
 
 getRow = (r, board) ->
   [board[r][0], board[r][1], board[r][2], board[r][3]]
+
+setRow = (row, index, board) ->
+  board[index] = row
 
 mergeCells = (row, direction) ->
   #to merge the cells we need to know the rows and the direction
@@ -71,13 +81,31 @@ collapseCells = (row, direction) ->
   # console.log row
   # row
 
-
-
 printArray = (array) ->
   console.log "--start--"
   for row in array
     console.log row
   console.log "--end--"
+
+arrayEqual = (arr1, arr2) ->
+  for element, index in arr1
+    if element != arr2[index]
+      return false
+  true
+
+boardEqual = (oBoard, nBoard) ->
+  for e, i in oBoard
+    console.log "old row: ", e
+    console.log "new row: ", nBoard[i]
+    #watch out for iterating this that you don't return "true" if the first element is true!!!
+    if not arrayEqual(e, nBoard[i])
+      return false
+  true
+
+moveIsValid = (oBoard, nBoard) ->
+  result = boardEqual(oBoard, nBoard)
+  not result
+
 
 showValue = (value) ->
   if value == 0 then "" else value
@@ -112,7 +140,17 @@ $ ->
       console.log "The direction is " + direction
 
       #try moving
-      move(@board, direction)
+
+      newBoard = move(@board, direction)
+      printArray(@board)
+      printArray(newBoard)
+
+      if moveIsValid(@board, newBoard)
+        console.log "valid"
+        @board = newBoard
+        showBoard(@board)
+      else
+        console.log "invalid"
       #check move validity
     else
 
