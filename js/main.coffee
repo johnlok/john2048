@@ -95,8 +95,8 @@ arrayEqual = (arr1, arr2) ->
 
 boardEqual = (oBoard, nBoard) ->
   for e, i in oBoard
-    console.log "old row: ", e
-    console.log "new row: ", nBoard[i]
+    # console.log "old row: ", e
+    # console.log "new row: ", nBoard[i]
     #watch out for iterating this that you don't return "true" if the first element is true!!!
     if not arrayEqual(e, nBoard[i])
       return false
@@ -106,6 +106,22 @@ moveIsValid = (oBoard, nBoard) ->
   result = boardEqual(oBoard, nBoard)
   not result
 
+boardIsFull = (board) ->
+  for row in board
+    if 0 in row
+      return false
+  true
+
+noValidMoves = (board) ->
+  directions = ['right','left','up','down']
+  for direction in directions
+    newBoard = move(board,direction)
+    if moveIsValid(board,newBoard)
+      return false
+  true
+
+isGameOver = (board) ->
+  boardIsFull(board) and noValidMoves(board)
 
 showValue = (value) ->
   if value == 0 then "" else value
@@ -148,7 +164,13 @@ $ ->
       if moveIsValid(@board, newBoard)
         console.log "valid"
         @board = newBoard
+        #generate tile
+        generateTile(@board)
+        #show the new board
         showBoard(@board)
+        #check GAME OVER
+        if isGameOver(@board)
+          console.log "YOU LOSE"
       else
         console.log "invalid"
       #check move validity
