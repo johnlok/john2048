@@ -4,8 +4,6 @@ randomInt = (x) ->
 randomCellIndices = ->
   [randomInt(4),randomInt(4)]
 
-
-
 buildBoard = ->
   # board = []
   # for row in [0..3]
@@ -24,59 +22,109 @@ getTileValue = ->
 generateTile = (board) ->
   value = getTileValue()
   [row, column] = randomCellIndices()
-  console.log "row: #{row} column: #{column}"
   if board[row][column] is 0
     board[row][column] = value
   else
     generateTile(board)
-  console.log "generated tile with a value of #{value}"
 
 move = (board, direction) ->
   newBoard = buildBoard()
 
   for i in [0..3]
-    if direction is 'right' or 'left'
-      row = getRow(i, board)
-      row = mergeCells(row, direction)
-      row = collapseCells(row, direction)
-      setRow(row, i, newBoard)
+    switch direction
+      when 'right', 'left'
+        row = getRow(i, board)
+        row = mergeCells(row, direction)
+        row = collapseCells(row, direction)
+        setRow(row, i, newBoard)
+      when 'up', 'down'
+        column = getColumn(i, board)
+        column = mergeCells(column, direction)
+        column = collapseCells(column, direction)
+        setColumn(column, i, newBoard)
+
+
+    # if direction is 'right' or 'left'
+    #   row = getRow(i, board)
+    #   row = mergeCells(row, direction)
+    #   row = collapseCells(row, direction)
+    #   setRow(row, i, newBoard)
+    # else if direction is 'up' or 'down'
+    #   column = getColumn(i, board)
+    #   column = mergeCells(column, direction)
+    #   column = collapseCells(column, direction)
+    #   setColumn(column, i, newBoard)
+
   newBoard
 
 
 getRow = (r, board) ->
   [board[r][0], board[r][1], board[r][2], board[r][3]]
 
+getColumn = (c, board) ->
+  [board[0][c], board[1][c], board[2][c], board[3][c]]
+
+# getColumn = (c, board) ->
+#   column = []
+#   for row in [0..3]
+#     column[row] = board[row][c]
+#   column
+
+# check = ->
+# a = [[2, 0, 0, 0],
+# [0, 0, 2, 0],
+# [0, 0, 0, 0],
+# [0, 0, 0, 0]]
+# console.log
+
+#harry's version
+# @getColumn = (columnNumber, board) ->
+#   column = []
+#   for row in [0..3]
+#     column[row] = board[row][columnNumber]
+#   column
+
+setColumn = (columnArray, columnNumber, board) -> #column refers to the column array, columnNumber is the column number, board is the original multidimensional array
+  for i in [0..3]
+    board[i][columnNumber] = columnArray[i]
+
+
 setRow = (row, index, board) ->
   board[index] = row
 
-mergeCells = (row, direction) ->
-  #to merge the cells we need to know the rows and the direction
+mergeCells = (cells, direction) ->
+  #to merge the cells we need to know the cellss and the direction
   #this is a double for loop which iterates over all the possible comparisons within the array
-  merge = (row) ->
+  merge = (cells) ->
     for a in [3...0]
       for b in [a-1..0]
-        if row[a] is 0
+        if cells[a] is 0
           break
-        else if row[a] is row[b]
-          row[a] *= 2
-          row[b] = 0
-        else if row[b] isnt 0
+        else if cells[a] is cells[b]
+          cells[a] *= 2
+          cells[b] = 0
+        else if cells[b] isnt 0
           break
-    row
+    cells
 
-  if direction = 'right'
-    row = merge(row)
-  else if direction = 'left'
-    row = (merge(row.reverse())).reverse()
-  row
+  switch direction
+    when 'right', 'down'
+      cells = merge(cells)
+    when 'left', 'up'
+      cells = merge(cells.reverse()).reverse()
+  cells
+
+console.log mergeCells [2,2,4,4], 'up'
 
 collapseCells = (row, direction) ->
   row = row.filter (x) -> x isnt 0
   zeroesToAdd = 4 - row.length
   for i in [0...zeroesToAdd]
     switch direction
-      when 'right','down' then row.unshift 0
-      when 'left','up' then row.push 0
+      when 'right', 'down'
+        row.unshift 0
+      when 'left','up'
+        row.push 0
   console.log row
   row
 
