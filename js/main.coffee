@@ -35,12 +35,11 @@ move = (board, direction) ->
   newBoard = buildBoard()
 
   for i in [0..3]
-    if direction is 'right'
+    if direction is 'right' or 'left'
       row = getRow(i, board)
       row = mergeCells(row, direction)
       row = collapseCells(row, direction)
       setRow(row, i, newBoard)
-
   newBoard
 
 
@@ -53,7 +52,7 @@ setRow = (row, index, board) ->
 mergeCells = (row, direction) ->
   #to merge the cells we need to know the rows and the direction
   #this is a double for loop which iterates over all the possible comparisons within the array
-  if direction is 'right'
+  merge = (row) ->
     for a in [3...0]
       for b in [a-1..0]
         if row[a] is 0
@@ -63,6 +62,12 @@ mergeCells = (row, direction) ->
           row[b] = 0
         else if row[b] isnt 0
           break
+    row
+
+  if direction = 'right'
+    row = merge(row)
+  else if direction = 'left'
+    row = (merge(row.reverse())).reverse()
   row
 
 collapseCells = (row, direction) ->
@@ -156,7 +161,6 @@ $ ->
       console.log "The direction is " + direction
 
       #try moving
-
       newBoard = move(@board, direction)
       printArray(@board)
       printArray(newBoard)
@@ -172,7 +176,7 @@ $ ->
         if isGameOver(@board)
           console.log "YOU LOSE"
       else
-        console.log "invalid"
+        showBoard(@board)
       #check move validity
     else
 
