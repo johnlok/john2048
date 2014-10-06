@@ -23,6 +23,27 @@ canvas {
   top: -495px;
   border-radius: 3px;
 }
+
+#game {
+  opacity: 0;
+}
+
+.start {
+
+}
+
+#startScreen {
+  width: 495px;
+  height: 495px;
+  background-color: white;
+  margin:0 auto;
+  text-align: center;
+}
+
+.startScreen > div {
+
+}
+
 .special {
   text-align:center;
 }
@@ -53,7 +74,7 @@ canvas {
   color: black;
   width: 106px;
   height: 106px;
-  background: rgba(255,255,255,0.94);
+  background: rgba(255,255,255,0.9);
   text-align: center;
   margin: 5px;
   font-size: 3.2em;

@@ -202,7 +202,7 @@ highestCurrentScore = (board) =>
 
 opacityFunction = (maxScore) ->
   opacity = switch maxScore
-    when 4 then (1 - (1/11) * 2)
+    when 4 then (1 - (1/11) * 1)
     when 8 then (1 - (1/11) * 2)
     when 16 then (1 - (1/11) * 3)
     when 32 then (1 - (1/11) * 4)
@@ -215,6 +215,10 @@ opacityFunction = (maxScore) ->
   opacity
 
 $ ->
+  $('#start').click (e) ->
+    e.preventDefault()
+    $('#startScreen').remove()
+    $('#game').animate({opacity:1}, 2000)
   @maxScore = 0
   @opacityValue = 1
   @board = buildBoard()
