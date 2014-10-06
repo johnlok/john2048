@@ -180,10 +180,26 @@ showValue = (value) ->
   if value == 0 then "" else value
   #this function changes all values from 0 to ""
 
+
+opacityFunction = (board) ->
+  for row in [0..3]
+    for col in [0..3]
+      for power in [0..11]
+        p = 2 ** power
+        if board[row][col] = p
+          $(".r#{row}.c#{col}").css('opacity',(1-(1/11)*power))
+
 showBoard = (board) ->
   for row in [0..3]
     for col in [0..3]
+      for power in [0..11]
+        p = 2 ** power
+        $(".r#{row}.c#{col}").removeClass('val-0')
+        $(".r#{row}.c#{col}").removeClass('val-' + (2 ** power))
+        $(".r#{row}.c#{col}").addClass('val-' + board[row][col])
+        # $(".r#{row}.c#{col}.val-#{p}").css('opacity',((1/11) * power))
       $(".r#{row}.c#{col} > div").html(showValue(board[row][col]))
+
   #this part of the code assigns the value of the board array into divs using jquery
 
 

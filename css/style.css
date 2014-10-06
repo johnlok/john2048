@@ -6,44 +6,53 @@
 html {
 }
 
-canvas {
-  position: absolute;
-  margin-left: -480px;
-  z-index: -1;
-  margin-top: -100px;
-}
-
 body {
   font-family: "Aileron";
-  background: url("../img/background.png") no-repeat center center fixed;
+  /*background: url("../img/background.png") no-repeat center center fixed;*/
+  background: white;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  color: white;
+  color: black;
 }
 
+canvas {
+  position: relative;
+  z-index: -1;
+  top: -495px;
+  border-radius: 3px;
+}
 .special {
   text-align:center;
 }
 
+.centerTitle > h1 {
+  text-align: center;
+  color: black;
+}
+
+.centerTitle > {
+  text-align: center;
+}
+
 .board {
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0);
   border-radius: 3px;
   text-align: center;
   padding: 15px;
-  width: 420px;
-  height: 420px;
+  width: 495px;
+  height: 495px;
   margin:0 auto;
-  margin-top: 100px;
+  margin-top: 30px;
 }
 
 .cell {
   border-radius: 3px;
   float: left;
   color: black;
-  width: 95px;
-  height: 95px;
+  width: 106px;
+  height: 106px;
   background: rgba(255,255,255,0.9);
   text-align: center;
   margin: 5px;
@@ -51,9 +60,46 @@ body {
 }
 
 .cell div {
-  margin-top: 13px;
+  margin-top: 18px;
 }
 
 h1 {
   color: #cac8d3;
 }
+
+.val-2 {
+  opacity: 1;
+}
+.val-4 {
+
+}
+.val-8 {
+
+}
+.val-16 {
+
+}
+.val-32 {
+
+}
+.val-64 {
+
+}
+.val-128 {
+
+}
+.val-256 {
+
+}
+.val-512 {
+
+}
+.val-1024 {
+
+}
+.val-2048 {
+
+}
+
+
+
