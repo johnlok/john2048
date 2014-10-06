@@ -53,7 +53,7 @@ canvas {
   color: black;
   width: 106px;
   height: 106px;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.94);
   text-align: center;
   margin: 5px;
   font-size: 3.2em;
@@ -68,7 +68,7 @@ h1 {
 }
 
 .val-2 {
-  opacity: 1;
+
 }
 .val-4 {
 

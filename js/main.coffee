@@ -180,20 +180,10 @@ showValue = (value) ->
   if value == 0 then "" else value
   #this function changes all values from 0 to ""
 
-
-opacityFunction = (board) ->
-  for row in [0..3]
-    for col in [0..3]
-      for power in [0..11]
-        p = 2 ** power
-        if board[row][col] = p
-          $(".r#{row}.c#{col}").css('opacity',(1-(1/11)*power))
-
 showBoard = (board) ->
   for row in [0..3]
     for col in [0..3]
       for power in [0..11]
-        p = 2 ** power
         $(".r#{row}.c#{col}").removeClass('val-0')
         $(".r#{row}.c#{col}").removeClass('val-' + (2 ** power))
         $(".r#{row}.c#{col}").addClass('val-' + board[row][col])
@@ -202,8 +192,31 @@ showBoard = (board) ->
 
   #this part of the code assigns the value of the board array into divs using jquery
 
+highestCurrentScore = (board) =>
+  score = 0
+  for row in [0..3]
+    for col in [0..3]
+      if board[row][col] >= score
+        score = board[row][col]
+  score
+
+opacityFunction = (maxScore) ->
+  opacity = switch maxScore
+    when 4 then (1 - (1/11) * 2)
+    when 8 then (1 - (1/11) * 2)
+    when 16 then (1 - (1/11) * 3)
+    when 32 then (1 - (1/11) * 4)
+    when 64 then (1 - (1/11) * 5)
+    when 128 then (1 - (1/11) * 6)
+    when 256 then (1 - (1/11) * 7)
+    when 512 then (1 - (1/11) * 8)
+    when 1024 then (1 - (1/11) * 9)
+    when 2048 then (1 - (1/11) * 11)
+  opacity
 
 $ ->
+  @maxScore = 0
+  @opacityValue = 1
   @board = buildBoard()
   generateTile(@board)
   generateTile(@board)
@@ -236,6 +249,11 @@ $ ->
         generateTile(@board)
         #show the new board
         showBoard(@board)
+        @maxScore = highestCurrentScore(@board)
+        @opacityValue = opacityFunction(@maxScore)
+        console.log @maxScore
+        console.log "the current opacity value is:" + @opacityValue
+        $(".cell").css('opacity',@opacityValue)
         #check GAME OVER
         if isGameOver(@board)
           console.log "YOU LOSE"
