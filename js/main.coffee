@@ -217,8 +217,21 @@ opacityFunction = (maxScore) ->
 $ ->
   $('#start').click (e) ->
     e.preventDefault()
-    $('#startScreen').remove()
-    $('#game').animate({opacity:1}, 2000)
+    $('#startScreen').addClass('hidden')
+    $('#game').animate({opacity:1}, 1500)
+
+  $('#tryAgain').click (e) =>
+    e.preventDefault()
+    $('#gameOgre').addClass('hidden')
+    $('#game').removeClass('hidden')
+    $(".cell").css('opacity',0.9)
+    @board = buildBoard()
+    generateTile(@board)
+    generateTile(@board)
+    printArray(@board)
+    showBoard(@board)
+
+  @currentScore = 0
   @maxScore = 0
   @opacityValue = 1
   @board = buildBoard()
@@ -260,6 +273,8 @@ $ ->
         $(".cell").css('opacity',@opacityValue)
         #check GAME OVER
         if isGameOver(@board)
+          $('#game').addClass('hidden')
+          $('#gameOgre').animate({opacity:1}, 1500)
           console.log "YOU LOSE"
       else
         showBoard(@board)

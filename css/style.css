@@ -24,11 +24,27 @@ canvas {
   border-radius: 3px;
 }
 
+.over {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
 #game {
   opacity: 0;
 }
 
+#gameOgre {
+  opacity: 0;
+}
+
 .start {
+
+}
+
+#tryAgain {
 
 }
 
