@@ -222,8 +222,9 @@ $ ->
 
   $('#tryAgain').click (e) =>
     e.preventDefault()
-    $('#gameOgre').addClass('hidden')
-    $('#game').removeClass('hidden')
+    # $('#gameOgre').animate({opacity:0}, 1200)
+    $('#gameOgre').css('opacity',0)
+    $('#game').show(0).animate({opacity:1}, 1500)
     $(".cell").css('opacity',0.9)
     @board = buildBoard()
     generateTile(@board)
@@ -273,8 +274,10 @@ $ ->
         $(".cell").css('opacity',@opacityValue)
         #check GAME OVER
         if isGameOver(@board)
-          $('#game').addClass('hidden')
-          $('#gameOgre').animate({opacity:1}, 1500)
+          # $('#game').animate({opacity:0}, 1500).addClass('hidden')
+          $('#game').animate({opacity:0}, 1200).hide(0)
+          # $('#game').delay( 3000 ).addClass('hidden')
+          $('#gameOgre').animate({opacity:1}, 1200)
           console.log "YOU LOSE"
       else
         showBoard(@board)
